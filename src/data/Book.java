@@ -10,15 +10,17 @@ public class Book {
 	private int count;
 	private double price;
 	private int rating;
+	private String genre;
 	
 	
-	public Book(String isbn, int authorID, String title, int count, double price){
+	public Book(String isbn, int authorID, String title, int count, double price, String genre){
 		setIsbn(isbn);
 		setAuthorID(authorID);
 		setTitle(title);
 		setCount(count);
 		setPrice(price);
 		setRating(0);
+		setGenre(genre);
 		
 	}
 	
@@ -80,6 +82,14 @@ public class Book {
 
 	public void setAuthorID(int authorID) {
 		this.authorID = authorID;
+	}
+	
+	public String getGenre() {
+		return genre;
+	}
+	
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 
 	public int getId() {

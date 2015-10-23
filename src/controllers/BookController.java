@@ -41,11 +41,12 @@ public class BookController {
 			@RequestParam int authorID,
 			@RequestParam String title,
 			@RequestParam int count,
-			@RequestParam double price
+			@RequestParam double price,
+			@RequestParam String genre
 			){
 		
 		try{
-			Book newBook = new Book(isbn, authorID, title, count, price);
+			Book newBook = new Book(isbn, authorID, title, count, price, genre);
 			dao.addToBookTable(newBook);
 			return "OK";
 		} catch (Exception e) {

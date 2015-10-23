@@ -27,14 +27,14 @@ private DataSource dataSource;
 	public void addToBookTable(Book newBook){
 		
 		String mysql = "INSERT INTO Book "
-				+ "(bookID, title, authorID, inventoryCount, price, rating, isbn) "
-				+ "VALUES (NULL, ?, ?, ?, ?, ?, ?)";
+				+ "(bookID, title, authorID, inventoryCount, price, rating, isbn, genre) "
+				+ "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 		
 		JdbcTemplate jdbcTemplate = getTemplate();
 		
 		jdbcTemplate.update(mysql, new Object[] {newBook.getTitle(), 
 				newBook.getAuthorID(), newBook.getCount(), newBook.getPrice(), 
-				newBook.getRating(), newBook.getIsbn()});
+				newBook.getRating(), newBook.getIsbn(), newBook.getGenre()});
 		
 	}
 	
