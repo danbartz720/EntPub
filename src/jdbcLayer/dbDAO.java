@@ -12,11 +12,16 @@ import data.Book;
 
 public class dbDAO {
 	
-	JdbcTemplate jdbcTemplate;
 private DataSource dataSource;
 	
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
+	}
+	
+	public JdbcTemplate getTemplate(){
+		ApplicationContext context = 
+				new ClassPathXmlApplicationContext("applicationContext.xml");
+		return (JdbcTemplate)context.getBean("JdbcTemplate");
 	}
 	
 	public void addToBookTable(Book newBook){
@@ -25,11 +30,7 @@ private DataSource dataSource;
 				+ "(bookID, title, authorID, inventoryCount, price, rating, isbn) "
 				+ "VALUES (NULL, ?, ?, ?, ?, ?, ?)";
 		
-		//jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("applicationContext.xml");
-		JdbcTemplate jdbcTemplate = (JdbcTemplate)context.getBean("JdbcTemplate");
+		JdbcTemplate jdbcTemplate = getTemplate();
 		
 		jdbcTemplate.update(mysql, new Object[] {newBook.getTitle(), 
 				newBook.getAuthorID(), newBook.getCount(), newBook.getPrice(), 
@@ -40,12 +41,10 @@ private DataSource dataSource;
 	@SuppressWarnings({ "unchecked" })
 	public Book getBookByID(int id){
 		
-		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("applicationContext.xml");
-		JdbcTemplate jdbcTemplate = (JdbcTemplate)context.getBean("JdbcTemplate");
-		
 		String mysql = "SELECT * FROM Book "
 				+ "WHERE bookID = ?";
+		
+		JdbcTemplate jdbcTemplate = getTemplate();
 		
 		Book newBook = (Book) jdbcTemplate.queryForObject(
 				mysql, new Object[] {id}, new BookRowMapper());
@@ -55,12 +54,10 @@ private DataSource dataSource;
 	
 	public void updateBookCount(int bookID, int count){
 		
-		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("applicationContext.xml");
-		JdbcTemplate jdbcTemplate = (JdbcTemplate)context.getBean("JdbcTemplate");
-		
 		String mysql = "UPDATE Book SET inventoryCount=? "
 				+ "WHERE bookID = ?";
+
+		JdbcTemplate jdbcTemplate = getTemplate();
 		
 		jdbcTemplate.update(mysql, new Object[] {count, bookID});
 	}
