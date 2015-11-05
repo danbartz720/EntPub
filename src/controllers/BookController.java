@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import data.Book;
+import data.StringHolder;
 
 @RestController
 @RequestMapping("/service/book")
@@ -19,8 +20,9 @@ public class BookController {
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET,
 			headers="Accept=application/json")
-	public @ResponseBody String test(@RequestParam String test) {
-		return "Your param was: " + test;
+	public @ResponseBody StringHolder test(@RequestParam String test) {
+		StringHolder temp = new StringHolder("Your param was: " + test);
+		return temp;
 	}
 
 	@RequestMapping(value = "/getBook", method = RequestMethod.GET,
@@ -61,13 +63,15 @@ public class BookController {
 	
 	@RequestMapping(value = "/updateCount", method = RequestMethod.GET,
 			headers="Accept=application/json")
-	public @ResponseBody HttpStatus updateBookCount(int bookID, int count){
+	public @ResponseBody StringHolder updateBookCount(
+			@RequestParam int bookID, 
+			@RequestParam int count){
 		
 		try{
 			dao.updateBookCount(bookID, count);
-			return HttpStatus.OK;
+			return new StringHolder(HttpStatus.OK.toString());
 		} catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return new StringHolder(HttpStatus.INTERNAL_SERVER_ERROR.toString());
 		}
 	}
 	
