@@ -78,5 +78,17 @@ private DataSource dataSource;
 		
 		return newUser;
 	}
+	
+	public void addUser(String username, String password){
+		
+		String mysql = "INSERT INTO Users " +
+				"(uid, username, password) " + 
+				"VALUES (NULL, ?, ?)";
+		
+		JdbcTemplate jdbcTemplate = getTemplate();
+		
+		jdbcTemplate.update(mysql, username, password);
+				
+	}
 
 }

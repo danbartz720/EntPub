@@ -32,5 +32,16 @@ public class LoginController {
 			return "USER NOT FOUND!";
 		}
 	}
-
+	
+	@RequestMapping(value = "/attempt", method = RequestMethod.POST,
+			headers="Accept=application/json")
+	public @ResponseBody String newUser(@RequestBody User loginUser) {
+		
+		try {
+			dao.addUser(loginUser.getUsername(), loginUser.getPassword());
+			return "200";
+		} catch (Exception e) {
+			return "500";
+		}
+	}
 }
