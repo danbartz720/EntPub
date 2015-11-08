@@ -3,12 +3,14 @@ package jdbcLayer;
 import javax.sql.DataSource;
 
 import jdbcLayer.Mappers.BookRowMapper;
+import jdbcLayer.Mappers.UserRowMapper;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import data.Book;
+import data.User;
 
 public class dbDAO {
 	
@@ -60,6 +62,21 @@ private DataSource dataSource;
 		JdbcTemplate jdbcTemplate = getTemplate();
 		
 		jdbcTemplate.update(mysql, new Object[] {count, bookID});
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public User getUser(String username, String password){
+		
+		String mysql = "SELECT * FROM Users "
+				+ "WHERE username = ? "
+				+ "AND password = ?";
+		
+		JdbcTemplate jdbcTemplate = getTemplate();
+		
+		User newUser = (User) jdbcTemplate.queryForObject(
+				mysql, new Object[] {username, password}, new UserRowMapper());
+		
+		return newUser;
 	}
 
 }
