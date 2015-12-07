@@ -2,18 +2,19 @@ package data;
 
 public class Book {
 
-	private int id;
+	private int bookId;
 	private String isbn;
 	private int authorID;
 	private String author;
 	private String title;
-	private int count;
+	private int inventoryCount;
 	private double price;
 	private int rating;
 	private String genre;
+	private Double weight;
 	
 	
-	public Book(String isbn, int authorID, String title, int count, double price, String genre){
+	public Book(String isbn, int authorID, String title, int count, double price, String genre, Double weight){
 		setIsbn(isbn);
 		setAuthorID(authorID);
 		setTitle(title);
@@ -21,6 +22,7 @@ public class Book {
 		setPrice(price);
 		setRating(0);
 		setGenre(genre);
+		setWeight(weight);
 		
 	}
 	
@@ -53,11 +55,11 @@ public class Book {
 	}
 
 	public int getCount() {
-		return count;
+		return inventoryCount;
 	}
 
 	public void setCount(int count) {
-		this.count = count;
+		this.inventoryCount = count;
 	}
 
 	public int getRating() {
@@ -93,11 +95,19 @@ public class Book {
 	}
 
 	public int getId() {
-		return id;
+		return bookId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.bookId = id;
+	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
 	}
 	
 }

@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jdbcLayer.dbDAO;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,13 @@ public class BookController {
 		StringHolder temp = new StringHolder("Your param was: " + test);
 		return temp;
 	}
+	
+	@RequestMapping(value = "/warehouse", method = RequestMethod.GET,
+			headers="Accept=application/json")
+	public @ResponseBody List<Book> getWarehouse(@RequestParam int uid) {
+		List<Book> warehouse = dao.getWarehouse(uid);
+		return warehouse;
+	}
 
 	@RequestMapping(value = "/getBook", method = RequestMethod.GET,
 			headers="Accept=application/json")
@@ -44,11 +54,12 @@ public class BookController {
 			@RequestParam String title,
 			@RequestParam int count,
 			@RequestParam double price,
-			@RequestParam String genre
+			@RequestParam String genre,
+			@RequestParam Double weight
 			){
 		
 		try{
-			Book newBook = new Book(isbn, authorID, title, count, price, genre);
+			Book newBook = new Book(isbn, authorID, title, count, price, genre, weight);
 			dao.addToBookTable(newBook);
 			return "OK";
 		} catch (Exception e) {

@@ -3,6 +3,8 @@ package controllers;
 import jdbcLayer.dbDAO;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,22 +22,20 @@ public class LoginController {
 
 	@RequestMapping(value = "/attempt", method = RequestMethod.POST,
 			headers="Accept=application/json")
-	public @ResponseBody String doLogin(@RequestBody User loginUser) {
+	public @ResponseBody User doLogin(@RequestBody User loginUser) {
 		
 		User attempt = dao.getUser(loginUser.getUsername(), loginUser.getPassword());
 		
 		if (!(attempt == null)){
-			return "User = " + loginUser.getUsername() + 
-					"Pass = " + loginUser.getPassword() +
-					"Uid = " + loginUser.getUid();
+			return attempt;
 		} else {
-			return "USER NOT FOUND!";
+			return new User(null, null, -1);
 		}
 	}
 	
-	@RequestMapping(value = "/attempt", method = RequestMethod.POST,
+	@RequestMapping(value = "/new", method = RequestMethod.POST,
 			headers="Accept=application/json")
-	public @ResponseBody String newUser(@RequestBody User loginUser) {
+	public @ResponseBody String newUser(Model model, @ModelAttribute User loginUser) {
 		
 		try {
 			dao.addUser(loginUser.getUsername(), loginUser.getPassword());
