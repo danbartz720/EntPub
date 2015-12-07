@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Purchase {
 	
-	
+	private int id;
 	private String date;
 	private double total;
 	private int userID;
@@ -23,6 +23,8 @@ public class Purchase {
 		setShipmentID(shipmentID);
 		setPaypalID(paypalID);
 	}
+	
+	public Purchase(){};
 
 
 	public double getTotal() {
@@ -109,6 +111,14 @@ public class Purchase {
 
 	public void setPaypalID(String paypalID) {
 		this.paypalID = paypalID;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

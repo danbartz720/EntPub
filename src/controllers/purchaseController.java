@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import jdbcLayer.dbDAO;
 
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import data.Book;
 import data.Purchase;
 import data.StringHolder;
 import data.User;
@@ -24,7 +27,7 @@ public class purchaseController {
 
 	@RequestMapping(value = "/newPurchase", method = RequestMethod.POST,
 			headers="Accept=application/json")
-	public @ResponseBody HttpStatus newPurchase(@RequestBody Purchase purchase) {
+	public @ResponseBody HttpStatus newPurchase(@RequestBody Purchase purchase, Model model) {
 		
 		try{
 			dao.addPurchase(purchase);
@@ -32,6 +35,13 @@ public class purchaseController {
 			return HttpStatus.BAD_REQUEST;
 		}
 		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/getPurchases", method = RequestMethod.GET,
+			headers="Accept=application/json")
+	public @ResponseBody List<Purchase> getPurchases(@RequestParam int uid) {
+		List<Purchase> purchases = dao.getPurchases(uid);
+		return purchases;
 	}
 	
 }

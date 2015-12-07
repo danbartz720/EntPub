@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import jdbcLayer.Mappers.BookRowMapper;
+import jdbcLayer.Mappers.PurchaseRowMapper;
 import jdbcLayer.Mappers.UserRowMapper;
 
 import org.springframework.context.ApplicationContext;
@@ -152,5 +153,20 @@ private DataSource dataSource;
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Purchase> getPurchases(int uid) {
+		
+		
+		String mysql = "SELECT * FROM Purchase "
+				+ "WHERE uid = ?";
+		
+		JdbcTemplate jdbcTemplate = getTemplate();
+		
+		List<Purchase> purchaseList = jdbcTemplate.query(
+				mysql, new Object[] {uid}, new PurchaseRowMapper());
+		
+		return purchaseList;
+		
+	}
 
 }
